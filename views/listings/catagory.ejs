@@ -1,0 +1,220 @@
+<% layout("/layouts/boilerplate") %> 
+<style>
+  #filters {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+  }
+
+  .filter-container {
+    display: flex !important;
+    justify-content: space-around !important;
+  }
+
+  .filter-box {
+    text-align: center;
+    margin-right: 1.7rem;
+    opacity: 0.7;
+    transition: 0.3s;
+  }
+
+  .filter-box button {
+    border: none;
+    outline: none;
+    font-size: 12px;
+    background-color: transparent;
+    white-space: nowrap;
+  }
+
+  .filter-box i {
+    font-size: 24px !important;
+  }
+
+  .filter-box:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+
+  
+
+  .tex-info {
+    display: none;
+  }
+
+  .tex-toggle {
+    color: black;
+    border: 1px solid black;
+    height: 42px;
+    /* margin-top: 4px; */
+    padding: 7px;
+    border-radius: 13px;
+  }
+
+  #flexSwitchCheckDefault {
+    color: black;
+    border: 1px solid black;
+  }
+
+</style>
+
+<div id="filters" class="mt-4">
+  <div class="filter-container">
+    <div class="filter-box">
+      <form action="/listings/catagory" method="post">
+      <div>
+        <i class="fa-solid fa-fire-flame-curved"></i>
+      </div>
+      <button name="btnValue" value="Trending">Trending</button>
+    </form>
+    </div>
+
+    <div class="filter-box">
+      <form action="/listings/catagory" method="post">
+      <div>
+        <i class="fa-solid fa-water-ladder"></i>
+      </div>
+      <button name="btnValue" value="Pool">Pools</button>
+      </form>
+    </div>
+
+    <div class="filter-box">
+      <form action="/listings/catagory" method="post">
+      <div>
+        <i class="fa-solid fa-couch"></i>
+      </div>
+      <button name="btnValue" value="Rooms">Rooms</button>
+      </form>
+    </div>
+
+    <div class="filter-box">
+      <form action="/listings/catagory" method="post">
+      <div>
+        <i class="fa-solid fa-tree-city"></i>
+      </div>
+      <button name="btnValue" value="Tropical">Tropiclas</button>
+      </form>
+    </div>
+
+    <div class="filter-box">
+      <form action="/listings/catagory" method="post">
+      <div>
+        <i class="fa-solid fa-umbrella-beach"></i>
+      </div>
+      <button name="btnValue" value="Beachfront">Beachfront</button>
+      </form>
+    </div>
+
+    <div class="filter-box">
+      <form action="/listings/catagory" method="post">
+      <div>
+        <i class="fa-solid fa-igloo"></i>
+      </div>
+      <button name="btnValue" value="Cave">Caves</button>
+      </form>
+    </div>
+
+    <div class="filter-box">
+      <form action="/listings/catagory" method="post">
+      <div>
+        <i class="fa-solid fa-hotel"></i>
+      </div>
+      <button name="btnValue" value="Hotel">Hotels</button>
+      </form>
+    </div>
+
+    <div class="filter-box">
+      <form action="/listings/catagory" method="post">
+      <div>
+        <i class="fa-solid fa-landmark-dome"></i>
+      </div>
+      <button name="btnValue" value="historical">Historical</button>
+      </form>
+    </div>
+
+    <div class="filter-box">
+      <form action="/listings/catagory" method="post">
+      <div>
+        <i class="fa-solid fa-gopuram"></i>
+      </div>
+      <button name="btnValue" value="Tower">Towers</button>
+      </form>
+    </div>
+
+    <div class="filter-box">
+      <form action="/listings/catagory" method="post">
+      <div>
+        <i class="fa-solid fa-ship"></i>
+      </div>
+      <button name="btnValue" value="Houseboat">Houseboats</button>
+      </form>
+    </div>
+
+    <div class="filter-box">
+      <form action="/listings/catagory" method="post">
+      <div>
+        <i class="fa-solid fa-mug-hot"></i>
+      </div>
+      <button name="btnValue" value="food">Brackfast</button>
+      </form>
+    </div>
+
+    <div class="filter-box">
+      <form action="/listings/catagory" method="post">
+      <div>
+        <i class="fa-solid fa-cable-car"></i>
+      </div>
+      <button name="btnValue" value="location">Tourism</button>
+      </form>
+    </div>
+
+    <div class="tex-toggle">
+      <div class="form-check-reverse form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Diaplay total before tax</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<h3 class="mt-3">Results for <%= btnValue %></h3>
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+    <% if(!allListings.length) {%>
+        <p>No Listings find for <%= btnValue %></p>
+        <% } %>
+    <% for(let listing of allListings) { %>
+      <a href="/listings/<%= listing._id  %>" class="listing-link">
+        <div class="card col listing-card">
+          <img src="<%= listing.image.url %>" class="card-img-top listing-card-img-top" alt="home-img"
+            style="height: 20rem ;">
+          <div class="card-img-overlay listing-card-img-overlay" style="height: 20rem; border-radius: 1rem;">fardeen
+          </div>
+          <div class="card-body listing-card-body">
+            <p class="card-text listing-card-text"> <b>
+                <%= listing.title %>
+              </b> <br>
+             <span class="listing-price">&#8377;<%= listing.price.toLocaleString("en-IN") %> /night</span>
+                <i class="tex-info ml-2" style="font-size: 12px;">&#8377;<%= listing.price+(listing.price*(18/100)) %> /night after GST</i>
+            </p>
+          </div>
+        </div>
+      </a>
+      <% } %>
+      
+  </div>
+
+  <script>
+    const toggleTex = document.querySelector('#flexSwitchCheckDefault');
+    toggleTex.addEventListener("click", () => {
+      const texInfo = document.getElementsByClassName("tex-info");
+      const beforeTexInfo = document.getElementsByClassName("listing-price");
+      for (info of texInfo ) {
+        if (info.style.display != "inline") {
+          info.style.display = "inline";
+        } else {
+          info.style.display = "none";
+        }
+      }
+
+    })
+  </script>

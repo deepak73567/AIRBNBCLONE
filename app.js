@@ -94,9 +94,9 @@ res.locals.currUser=req.user;
 // console.log(res.locals.success);
 next();
 });
+app.use("/",listingsRouter);
 app.use("/listings",listingsRouter);
 app.use("/listings/:id/reviews",reviewsRouter);
-app.use("/",userRouter);
 // if page not found
 app.all("*",(req,res,next)=>{
     next(new ExpressError(404,"page Not Found!"));

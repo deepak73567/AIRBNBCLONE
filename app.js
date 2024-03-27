@@ -94,16 +94,17 @@ res.locals.currUser=req.user;
 // console.log(res.locals.success);
 next();
 });
-app.use("/",listingsRouter);
+app.use("/",userRouter);
 app.use("/listings",listingsRouter);
 app.use("/listings/:id/reviews",reviewsRouter);
 // if page not found
-app.all("*",(req,res,next)=>{
-    next(new ExpressError(404,"page Not Found!"));
-})
 app.all("/",(req,res,next)=>{
     res.redirect("/listings");
 });
+app.all("*",(req,res,next)=>{
+    next(new ExpressError(404,"page Not Found!"));
+});
+
 
 //midddleware
 app.use((err,req,res,next)=>{

@@ -72,7 +72,9 @@ module.exports.createListing = async (req, res, next) => {
     res.redirect("/listings");
   } catch (error) {
     console.error("Error creating listing:", error);
+    console.log(response);
     req.flash("error", "Failed to create listing");
+    
     res.redirect("/listings");
   }
 }

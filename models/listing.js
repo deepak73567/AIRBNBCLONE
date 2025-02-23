@@ -1,4 +1,3 @@
-
 const mongoose=require("mongoose");
 const Schema=mongoose.Schema;
 const Review=require("./review.js");
@@ -6,7 +5,6 @@ const Review=require("./review.js");
 const listingSchema=new Schema({
   title:{
     type:String,
-    
   },
   description:String,
   image: {
@@ -24,26 +22,16 @@ const listingSchema=new Schema({
   ],
   owner:{
     type:Schema.Types.ObjectId,
-      ref:"User",
-  },
-  geometry: {
-    type: {
-      type: String,
-      enum: ['Point'], // Corrected enum value
-      
-    },
-    coordinates: {
-      type: [Number],
-      
-    },
-  },
+    ref:"User",
+  }
 });
+
 //mongoose middleware
 listingSchema.post("findOneAndDelete", async (listing)=>{
   if(listing){
     await Review.deleteMany({_id:{$in: listing.reviews}});
   }
-
 });
+
 const Listing=mongoose.model("Listing",listingSchema);
 module.exports = Listing;
